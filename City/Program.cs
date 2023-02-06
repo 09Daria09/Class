@@ -25,6 +25,9 @@ namespace City
             string str2 = airplane.ToString();
             Console.WriteLine(str2);
 
+            Matrix matrix = new Matrix();
+            matrix.Input();
+            matrix.Print();
         }
     }
 }
