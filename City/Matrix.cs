@@ -8,15 +8,38 @@ namespace City
 {
     class Matrix
     {
-        int[,] matrix = new int[5, 5];
+        Random random = new Random();
+        private int[,] matrix;
         private int maxValue;
         private int minValue;
+        private int n;
+
+        public Matrix(int len)
+        {
+            n = len;
+            matrix = new int[n, n];
+        }
+
         public Matrix()
         {
-            maxValue = matrix[0, 0];
-            minValue = matrix[0, 0];
         }
-        
+
+        public int Len
+        {
+            get { return n; }
+            set { if (value > 0) n = value; }
+        }
+        public int this[int i, int j]
+        {
+            get
+            {
+                return matrix[i, j];
+            }
+            set
+            {
+                matrix[i, j] = value;
+            }
+        }
         public int MaxValue
         {
             get
@@ -28,7 +51,6 @@ namespace City
         {
             get
             {
-
                 return minValue = matrix.Cast<int>().Min();
             }
         }
@@ -44,19 +66,103 @@ namespace City
                 Console.WriteLine();
             }
         }
-
-        public void Print()
+        public void InputRand()
         {
             for (int i = 0; i < matrix.GetLength(0); i++)
             {
                 for (int j = 0; j < matrix.GetLength(1); j++)
                 {
-                    Console.WriteLine(matrix[i, j]);
+                    matrix[i, j] = random.Next(1,10);
+                }
+            }
+        }
+        public void Print()
+        {
+            Console.WriteLine("--------------------------------------");
+            for (int i = 0; i < matrix.GetLength(0); i++)
+            {
+                for (int j = 0; j < matrix.GetLength(1); j++)
+                {
+                    Console.Write($"  {matrix[i, j]}  ");
                 }
                 Console.WriteLine();
             }
         }
 
+        public static Matrix operator +(Matrix a, Matrix b)
+        {
+            Matrix result = new Matrix(a.Len);
+            for (int i = 0; i < a.Len; i++)
+            {
+                for (int j = 0; j < b.Len; j++)
+                {
+                    result[i, j] = a[i, j] + b[i, j];
+                }
+            }
+            return result;
+        }
+        public static Matrix operator -(Matrix a, Matrix b)
+        {
+            Matrix result = new Matrix(a.Len);
+            for (int i = 0; i < a.Len; i++)
+            {
+                for (int j = 0; j < b.Len; j++)
+                {
+                    result[i, j] = a[i, j] - b[i, j];
+                }
+            }
+            return result;
+        }
+
+        public static Matrix operator *(Matrix a, Matrix b)
+        {
+            Matrix result = new Matrix(a.Len);
+            for (int i = 0; i < a.Len; i++)
+            {
+                for (int j = 0; j < b.Len; j++)
+                {
+                    result[i, j] = a[i, j] * b[i, j];
+                }
+            }
+            return result;
+        }
+
+        public static Matrix operator *(Matrix a, int b)
+        {
+            Matrix result = new Matrix(a.Len);
+            for (int i = 0; i < a.Len; i++)
+            {
+                for (int j = 0; j < a.Len; j++)
+                {
+                    result[i, j] = a[i, j] * b;
+                }
+            }
+            return result;
+        }
+
+        public static bool operator ==(Matrix a, Matrix b)
+        {
+            bool result;
+            for (int i = 0; i < a.Len; i++)
+            {
+                for (int j = 0; j < a.Len; j++)
+                {
+                    if (a[i, j] == b[i, j])
+                    {
+                        result = true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+        public static bool operator !=(Matrix a, Matrix b)
+        {
+            return !(a==b);
+        }
 
     }
 }

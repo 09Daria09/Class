@@ -14,7 +14,7 @@ namespace City
         private string email;
         private string jobTitle;
         private string responsibilities;
-
+        private int salary;
        public Employee()
         {
             fullName = null;
@@ -23,6 +23,7 @@ namespace City
             email = null;
             jobTitle = null;
             responsibilities = null;
+            salary = 0;
         }
        
         public string FullName
@@ -55,6 +56,11 @@ namespace City
             get => responsibilities;
             set => responsibilities = value;
         }
+        public int Salary
+        {
+            get => salary;
+            set => salary = value;
+        }
         public void Input()
         {
             Console.Write("ФИО: ");
@@ -69,12 +75,41 @@ namespace City
             jobTitle = Console.ReadLine();
             Console.Write("Введите описание служебных обязанностей: ");
             responsibilities = Console.ReadLine();
+            Console.Write("Введите зарплату: ");
+            salary = Convert.ToInt32(Console.ReadLine());
         }
 
         public override string ToString()
         {
             return $"ФИО: {fullName}\nДату рождения: {dateOfBirth}\nКонтактный телефон: {phone}" +
-                $"\nРабочий email: {email}\nДолжность: {jobTitle}\nОписание служебных обязанностей: {responsibilities}";
+                $"\nРабочий email: {email}\nДолжность: {jobTitle}\nОписание служебных обязанностей: {responsibilities}\nЗарплата:";
+        }
+
+        public static Employee operator +(Employee a, int opl)
+        {
+            a.Salary += opl;
+            return a;
+        }
+        public static Employee operator -(Employee a, int opl)
+        {
+            a.Salary -= opl;
+            return a;
+        }
+        public static bool operator ==(Employee op1, Employee op2)
+        {
+            return op1.Salary == op2.Salary;
+        }
+        public static bool operator !=(Employee op1, Employee op2)
+        {
+            return op1.Salary != op2.Salary;
+        }
+        public static bool operator <(Employee op1, Employee op2)
+        {
+            return op1.Salary < op2.Salary;
+        }
+        public static bool operator >(Employee op1, Employee op2)
+        {
+            return op1.Salary > op2.Salary;
         }
     }
 }
