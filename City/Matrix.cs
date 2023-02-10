@@ -29,15 +29,50 @@ namespace City
             get { return n; }
             set { if (value > 0) n = value; }
         }
+
+        public int Rows
+        {
+            get;
+            set;
+        }
+        public int Cols
+        {
+            get;
+            set;
+        }
+        public Matrix(int rows, int cols)
+        {
+            Rows = rows;
+            Cols = cols;
+            matrix = new int[rows, cols];
+        }
         public int this[int i, int j]
         {
             get
-            {
-                return matrix[i, j];
+            {                
+                if (i < 0 || i >= matrix.GetLength(0))
+                {
+                    throw new Exception("Некорректный индекс! " + i);
+                }
+                else if (j < 0 || j >= matrix.GetLength(1))
+                {
+                    throw new Exception("Некорректный индекс! " + j);
+                }
+                else
+                    return matrix[i, j];
             }
             set
             {
-                matrix[i, j] = value;
+                if (i < 0 || i >= matrix.GetLength(0))
+                {
+                    throw new Exception("Некорректный индекс! " + i);
+                }
+                else if (j < 0 || j >= matrix.GetLength(1))
+                {
+                    throw new Exception("Некорректный индекс! " + j);
+                }
+                else
+                    matrix[i, j] = value;
             }
         }
         public int MaxValue
